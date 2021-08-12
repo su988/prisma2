@@ -14,4 +14,31 @@ router.get('/', async (req, res) => {
   res.json(users);
 });
 
+router.post('/', async (req, res) => {
+  let { username } = req.body;
+
+  const userExists = await user.findUnique({
+    where: {
+      username,
+    },
+    select: {
+      username: true,
+    },
+  });
+
+  if (userExists) {
+    return res.status(400).json({
+      msg: 'user already exists',
+    });
+  }
+
+  const newUser = await user.create({
+    data: {
+      username,
+    },
+  });
+
+  res.json(newUser);
+});
+
 module.exports = router;

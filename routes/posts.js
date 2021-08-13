@@ -44,7 +44,7 @@ router.get('/:user_id', async (req, res) => {
     },
   });
 
-  return posts;
+  res.send(posts);
 });
 
 module.exports = router;
